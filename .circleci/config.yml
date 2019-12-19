@@ -56,6 +56,6 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - accept_library_licenses
-      - build
+      # accept_library_licenses
+      # build
       - build_release
