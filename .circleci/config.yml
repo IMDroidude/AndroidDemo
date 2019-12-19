@@ -20,80 +20,9 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-  test_stage:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/android:api-25-alpha
-    environment:
-      JVM_OPTS: -Xmx3200m
-      FASTLANE_LANE: stage
-    steps:
-      - checkout
-      - restore_cache:
-          key: 1-gems-{{ checksum "Gemfile.lock" }}
-      - run: bundle install --path vendor/bundle
-      - save_cache:
-          key: 1-gems-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
-      - run:
-          name: fastlane
-          command: bundle exec fastlane $FASTLANE_LANE
-  pre_release_production:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/android:api-25-alpha
-    environment:
-      JVM_OPTS: -Xmx3200m
-      FASTLANE_LANE: beta
-    steps:
-      - checkout
-      - restore_cache:
-          key: 1-gems-{{ checksum "Gemfile.lock" }}
-      - run: bundle install --path vendor/bundle
-      - save_cache:
-          key: 1-gems-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
-      - run:
-          name: fastlane
-          command: bundle exec fastlane $FASTLANE_LANE
-  release_production:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/android:api-25-alpha
-    environment:
-      JVM_OPTS: -Xmx3200m
-      FASTLANE_LANE: deploy
-    steps:
-      - checkout
-      - restore_cache:
-          key: 1-gems-{{ checksum "Gemfile.lock" }}
-      - run: bundle install --path vendor/bundle
-      - save_cache:
-          key: 1-gems-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
-      - run:
-          name: fastlane
-          command: bundle exec fastlane $FASTLANE_LANE
+
 workflows:
   version: 2
-  test:
-    jobs:
-      - test_stage:
-          filters:
-            branches:
-              only: develop
-  pre_release:
-    jobs:
-      - pre_release_production:
-          filters:
-            branches:
-              only: /release/*.*.*/
-  release:
-    jobs:
-      - release_production:
-          filters:
-            branches:
-              only: master
+    build_and_test:
+      jobs:
+        - build
