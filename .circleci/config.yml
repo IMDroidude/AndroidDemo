@@ -1,28 +1,33 @@
 version: 2
 jobs:
-  build:
-    working_directory: ~/repo
+  accept_library_licenses:
     docker:
-      - image: circleci/android:api-28-alpha
+      - image: circleci/android:api-25-alpha
+    environment:
+      JVM_OPTS: -Xmx4G
+    steps:
+      - checkout
+      - run: cp -r licenses/. $ANDROID_HOME/licenses
+  build:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-25-alpha
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      #      - run:
-      #         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
-      #         command: sudo chmod +x ./gradlew
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
 
 workflows:
   version: 2
-    build_and_test:
-      jobs:
-        - build
+  build_and_test:
+    jobs:
+      - build
