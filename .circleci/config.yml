@@ -41,6 +41,7 @@ jobs:
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
+      - run: make build
       - save_cache:
           paths:
             - ~/.gradle
@@ -49,8 +50,10 @@ jobs:
           #name: Initial build
           #command: ./gradlew clean assembleRelease --no-daemon --stacktrace
       - store_artifacts:
-          path: app/build/outputs/apk/
-          destination: apks/
+            path: /bin/final_build
+      #- store_artifacts:
+          #path: app/build/outputs/apk/
+          #destination: apks/
 
 workflows:
   version: 2
