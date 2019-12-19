@@ -60,10 +60,8 @@ public class FreeNowMobileAppAutomation {
                     "android.permission.ACCESS_FINE_LOCATION");
 
     private void enterTextInEditText(int resID,String textToreplace){
-        //onData(withText(R.string.in_email)).perform(click()); //onView works with 100% visible data
         isViewVisible(resID).perform(click())
                 .perform(typeText(textToreplace),closeSoftKeyboard());
-        //.perform(replaceText(textToreplace),closeSoftKeyboard())  ;
     }
 
     private ViewInteraction isViewVisible(int resID){
@@ -76,7 +74,7 @@ public class FreeNowMobileAppAutomation {
 
     private void delay(long millis){
         try {
-            Thread.sleep(1000);
+            Thread.sleep(millis);
         } catch (InterruptedException e) {
             System.out.println(e);
         }
@@ -85,98 +83,21 @@ public class FreeNowMobileAppAutomation {
     @Test
     public void freeNowMobileAppAutomation() {
 
-        /// onView(isRoot()).perform(waitId(R.id.edt_password, TimeUnit.SECONDS.toMillis(15)));
-        ///onView(withId(R.id.search_src_text)).perform(typeText("116@wi"), pressImeActionButton());
-
         enterTextInEditText(R.id.edt_username,"crazydog335");
         enterTextInEditText(R.id.edt_password,"venture");
         delay(1000);
         performClicked(R.id.btn_login);
 
         delay(2000);
-
         enterTextInEditText(R.id.textSearch,"sa");
-
         delay(1200);
-
-        /*onView(withText("Samantha Reed"))
-                .inRoot(RootMatchers.isPlatformPopup()).perform(click());*/
-
 
         onView(allOf(withText("Samantha Reed"), isDisplayed()))
                 .inRoot(RootMatchers.isPlatformPopup()).perform(click());
-
-        /*onData(equalTo("Samantha Reed"))
-                .inRoot(RootMatchers.isPlatformPopup()).perform(click());*/
-
-        delay(2000);
+        delay(1500);
 
         isViewVisible(R.id.textViewDriverName).check(matches(withText("Samantha Reed")));
-
-        ///isViewVisible(R.id.imageViewDriverAvatar);
-        ///isViewVisible(R.id.toolbar);
-
         performClicked(R.id.fab);
 
     }
-
-    /*private static Matcher<View> childAtPosition(
-            final Matcher<View> parentMatcher, final int position) {
-
-        return new TypeSafeMatcher<View>() {
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("Child at position " + position + " in parent ");
-                parentMatcher.describeTo(description);
-            }
-
-            @Override
-            public boolean matchesSafely(View view) {
-                ViewParent parent = view.getParent();
-                return parent instanceof ViewGroup && parentMatcher.matches(parent)
-                        && view.equals(((ViewGroup) parent).getChildAt(position));
-            }
-        };
-    }*/
-
-    /*public static ViewAction waitId(final int viewId, final long millis) {
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return isRoot();
-            }
-
-            @Override
-            public String getDescription() {
-                return "wait for a specific view with id <" + viewId + "> during " + millis + " millis.";
-            }
-
-            @Override
-            public void perform(final UiController uiController, final View view) {
-                uiController.loopMainThreadUntilIdle();
-                final long startTime = System.currentTimeMillis();
-                final long endTime = startTime + millis;
-                final Matcher<View> viewMatcher = withId(viewId);
-
-                do {
-                    for (View child : TreeIterables.breadthFirstViewTraversal(view)) {
-                        // found view with required ID
-                        if (viewMatcher.matches(child)) {
-                            return;
-                        }
-                    }
-
-                    uiController.loopMainThreadForAtLeast(50);
-                }
-                while (System.currentTimeMillis() < endTime);
-
-                // timeout happens
-                throw new PerformException.Builder()
-                        .withActionDescription(this.getDescription())
-                        .withViewDescription(HumanReadables.describe(view))
-                        .withCause(new TimeoutException())
-                        .build();
-            }
-        };
-    }*/
 }
