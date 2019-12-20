@@ -3,12 +3,14 @@ jobs:
 
   accept_library_licenses: # testing license
     docker:
-      - image: circleci/android:api-25-alpha
+      - image: circleci/android:api-28-alpha
     environment:
       JVM_OPTS: -Xmx4G
     steps:
       - checkout
       - run: cp -r licenses/. $ANDROID_HOME/licenses
+
+
 
 #  build:  # build creation and dependencies testing
 #      working_directory: ~/code
