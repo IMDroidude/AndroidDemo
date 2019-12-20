@@ -1,14 +1,14 @@
 version: 2
 jobs:
 
-  accept_library_licenses: # testing license
-    docker:
-      - image: circleci/android:api-28 #android:api-28-alpha #android:api-28 #
-    environment:
-      JVM_OPTS: -Xmx4G
-    steps:
-      - checkout
-      - run: yes | sdkmanager --licenses && yes | sdkmanager --update
+#  accept_library_licenses: # testing license
+#    docker:
+#      - image: circleci/android:api-28 #android:api-28-alpha #android:api-28 #
+#    environment:
+#      JVM_OPTS: -Xmx4G
+#    steps:
+#      - checkout
+#      - run: yes | sdkmanager --licenses && yes | sdkmanager --update
       #- run: cp -r licenses/. $ANDROID_HOME/licenses
       #- run: yes | sudo ~/Library/Android/sdk/tools/bin/sdkmanager --licenses
       #- run: yes | ./sdkmanager "platforms;android-28"
@@ -21,30 +21,30 @@ jobs:
       JVM_OPTS: -Xmx4G
     steps:
       - checkout
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
-      - run:
-            name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
-            command: sudo chmod +x ./gradlew
-      - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
+#      - restore_cache:
+#          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+#      - run:
+#            name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
+#            command: sudo chmod +x ./gradlew
+#      - run:
+#          name: Download Dependencies
+#          command: ./gradlew androidDependencies
 
 
       - run: echo $ENCODED_KEYSTORE | base64 --decode >> yourprivatekey.jks #${HOME}/yourprivatekey.jks
      # - run: echo ‘export KEYSTORE=${HOME}/yourprivatekey.jks’ >> $BASH_ENV
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
-
-      - run:
-          name: Initial build
-          command: ./gradlew clean assembleRelease --no-daemon --stacktrace
-
-      - store_artifacts:
-          path: app/build/outputs/apk/
-          destination: apks/
+#      - save_cache:
+#          paths:
+#            - ~/.gradle
+#          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+#
+#      - run:
+#          name: Initial build
+#          command: ./gradlew clean assembleRelease --no-daemon --stacktrace
+#
+#      - store_artifacts:
+#          path: app/build/outputs/apk/
+#          destination: apks/
 
 
 
