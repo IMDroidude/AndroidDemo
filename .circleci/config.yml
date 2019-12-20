@@ -3,7 +3,7 @@ jobs:
 
   accept_library_licenses: # testing license
     docker:
-      - image: circleci/android:api-28-alpha
+      - image: circleci/circleci/android:api-28 #android:api-28-alpha
     environment:
       JVM_OPTS: -Xmx4G
     steps:
@@ -35,7 +35,7 @@ jobs:
   build:
     working_directory: ~/src
     docker:
-      - image: circleci/android:api-28-alpha
+      - image: circleci/circleci/android:api-28 #android:api-28-alpha
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
