@@ -9,7 +9,8 @@ jobs:
     steps:
       - checkout
       #- run: cp -r licenses/. $ANDROID_HOME/licenses
-      - run: yes | sudo ~/Library/Android/sdk/tools/bin/sdkmanager --licenses
+      #- run: yes | sudo ~/Library/Android/sdk/tools/bin/sdkmanager --licenses
+      - run: yes | ./sdkmanager "platforms;android-28"
 
 
 
