@@ -1,13 +1,14 @@
 version: 2
 jobs:
 
-  accept_library_licenses: # testing license
-    docker:
-      - image: circleci/circleci/android:api-28 #android:api-28-alpha
-    environment:
-      JVM_OPTS: -Xmx4G
-    steps:
-      - checkout
+#  accept_library_licenses: # testing license
+#    docker:
+#      - image: circleci/circleci/android:api-28 #android:api-28-alpha
+#    environment:
+#      JVM_OPTS: -Xmx4G
+#    steps:
+#      - checkout
+
       #- run: cp -r licenses/. $ANDROID_HOME/licenses
       #- run: yes | sudo ~/Library/Android/sdk/tools/bin/sdkmanager --licenses
       #- run: yes | ./sdkmanager "platforms;android-28"
@@ -37,7 +38,7 @@ jobs:
     docker:
       - image: circleci/circleci/android:api-28 #android:api-28-alpha
     environment:
-      JVM_OPTS: -Xmx3200m
+      JVM_OPTS: -Xmx4G
     steps:
       - checkout
       - restore_cache:
