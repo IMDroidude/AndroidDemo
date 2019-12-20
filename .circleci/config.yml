@@ -52,7 +52,8 @@ jobs:
           name: Download Dependencies
           command: ./gradlew androidDependencies
 
-      - run: echo $ENCODED_KEYSTORE | base64 --decode >> /Users/geek/Downloads/Nisar_QA_Test_Free_Now_Free/AndroidDemo/yourprivatekey.jks #${HOME}/yourprivatekey.jks
+
+      - run: echo $ENCODED_KEYSTORE | base64 --decode >> yourprivatekey.jks #${HOME}/yourprivatekey.jks
      # - run: echo ‘export KEYSTORE=${HOME}/yourprivatekey.jks’ >> $BASH_ENV
       - save_cache:
           paths:
