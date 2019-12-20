@@ -20,7 +20,6 @@ jobs:
 
       - run: echo $ENCODED_KEYSTORE | base64 --decode >> ${HOME}/yourprivatekey.jks
       - run: echo ‘export KEYSTORE=${HOME}/yourprivatekey.jks’ >> $BASH_ENV
-        -
       - save_cache:
           paths:
             - ~/.gradle
