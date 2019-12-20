@@ -8,7 +8,8 @@ jobs:
       JVM_OPTS: -Xmx4G
     steps:
       - checkout
-      - run: cp -r licenses/. $ANDROID_HOME/licenses
+      #- run: cp -r licenses/. $ANDROID_HOME/licenses
+      - run: yes | sudo ~/Library/Android/sdk/tools/bin/sdkmanager --licenses
 
 
 
